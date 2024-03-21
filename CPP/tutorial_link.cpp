@@ -66,32 +66,12 @@ int main(int argc, char const *argv[])
                 ptEtaPhiVector((*LHEAssociatedParticlePt)[i], (*LHEAssociatedParticleEta)[i], (*LHEAssociatedParticlePhi)[i], (*LHEAssociatedParticleMass)[i])
             );
         }
+
+        /*SET UP MELA ATTRIBUTES HERE!*/
+        float prob = 0;
+        m.computeP(prob, false);
+        probs.push_back(prob);
     }
-
-    /*SET UP MELA ATTRIBUTES HERE!*/
-    float prob = 0;
-    m.computeP(prob, false);
-    probs.push_back(prob);
-
-
-    // for (int iEntry = 0; iEntry<=NEVT; iEntry++) {
-    //     cout << "THIS IS IENTRY " << iEntry << endl;
-    //     tree->GetEntry(iEntry);
-    //     // cout << iEntry << endl;
-        
-    //     // cout << "Got here" << endl;
-
-    //     // /*Set any/all couplings you want here*/
-
-    //     // // m.setInputEvent();/*Set your input event here*/
-    //     // m.setProcess(TVar::HSMHiggs, TVar::MCFM, TVar::ZZGG);
-    //     // float prob = 0;
-    //     // m.computeP(prob, false);
-    //     // probs.push_back(prob);
-
-    //     // // float prop = 0;
-    //     // // m.getXPropagator(TVar::CPS, prop);
-    // }
 
     ggHFile->Close();
 
