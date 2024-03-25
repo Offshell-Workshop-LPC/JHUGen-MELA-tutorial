@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include "Mela.h"
 #include "TVar.hh"
 #include "TCouplingsBase.hh"
@@ -10,7 +11,7 @@
 
 using namespace std;
 
-TLorentzVector ptEtaPhiVector(double pt, double eta, double phi, double m){
+TLorentzVector ptEtaPhiVector(double pt, double eta, double phi, double m){ //constructs pt, eta, phi TLorentzVector
     TLorentzVector vec = TLorentzVector();
     vec.SetPtEtaPhiM(pt, eta, phi, m);
     return vec;
@@ -21,7 +22,9 @@ int main(int argc, char const *argv[])
     Mela m = Mela(13, 125, TVar::SILENT);
 
     TFile* dataFile = TFile::Open("../SAMPLE_DATA/EWSample_4l.root");
-    // TFile* datafile = TFile::Open("../SAMPLE_DATA/ggHSample_4l.root");
+    // TFile* dataFile = TFile::Open("../SAMPLE_DATA/ggHSample_4l.root");
+    // TFile* dataFile = TFile::Open("../SAMPLE_DATA/POWHEGSample_mH_125.root");
+
     TTreeReader myReader("eventTree", dataFile);
 
     TTreeReaderValue<vector<short>> LHEDaughterId(myReader,   "LHEDaughterId");
@@ -41,6 +44,8 @@ int main(int argc, char const *argv[])
     TTreeReaderValue<vector<float>> LHEMotherE(myReader,  "LHEMotherE");
 
     vector<float> probs;
+    ofstream outputFile;
+    outputFile.open("probs_output.txt");
 
     while (myReader.Next()){
 
@@ -71,8 +76,12 @@ int main(int argc, char const *argv[])
         float prob = 0;
         m.computeP(prob, false);
         probs.push_back(prob);
+
+        outputFile << prob << "\n";
     }
 
-    ggHFile->Close();
+    outputFile.close();
+    dataFile->Close();
 
+    return 0;
 }

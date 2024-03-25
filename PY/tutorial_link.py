@@ -10,6 +10,8 @@ if __name__ == "__main__":
     
     dataFile = uproot.open("../SAMPLE_DATA/EWSample_4l.root")
     # dataFile = uproot.open("../SAMPLE_DATA/ggHSample_4l.root")
+    # dataFile = uproot.open("../SAMPLE_DATA/POWHEGSample_mH_125.root")
+
     tree = dataFile["eventTree"]
     data = tree.arrays(
         [
@@ -19,7 +21,7 @@ if __name__ == "__main__":
         ],
         library='np'
     )
-    
+    f = open("probs_output.txt", "w+")
     probs = []
     for i in range(tree.num_entries):
         mothers = Mela.SimpleParticleCollection_t(
@@ -50,7 +52,10 @@ if __name__ == "__main__":
         )
 
         #SET UP MELA ATTRIBUTES HERE!
-        
-        probs.append(m.computeP(False))
-    
+        prob = m.computeP(False)
+        probs.append(prob)
+
+        f.write(f"{prob:.3e}\n")
+
+    f.close()
     dataFile.close()

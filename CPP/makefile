@@ -62,7 +62,7 @@ DEPS = $(OBJECTS:.o=.d)
 all: tutorial
 
 tutorial: tutorial_link.cpp
-	g++ $(CPPFLAGS) -L$(MELALIBDIR) -lJHUGenMELAMELA tutorial_link.cpp
+	@g++ $(CPPFLAGS) -L$(MELALIBDIR) -lJHUGenMELAMELA tutorial_link.cpp
 
 
 
